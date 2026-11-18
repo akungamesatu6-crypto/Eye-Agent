@@ -1,0 +1,23 @@
+{
+  "token": {
+    "predicted": "0xF2F6eB4d9A0a16d541309EB5c87B411690b9eaF6",
+    "gasViaProxy": "906093",
+    "costBnb": 0.00004530465
+  },
+  "nft": {
+    "predicted": "0xE1a4eD8aFd57b387eF25154Ed378951897C74429",
+    "gasViaProxy": "1953216",
+    "costBnb": 0.0000976608
+  },
+  "market": {
+    "predicted": "0x433D261d709aba0c587fb48c60aa32B194707E4A",
+    "gasViaProxy": "1064211",
+    "costBnb": 0.00005321055
+  },
+  "proxy": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+  "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "baseURI": "https://eye-agent.vercel.app/metadata/",
+  "owner": "0x36F3D56eAD5D1D6C2434F94DeFcEF732C5C3CbD2",
+  "totalCostBnb": 0.000196176,
+  "note": "SIMULATION ONLY — nothing deployed to mainnet. Gas estimated on local Hardhat network with identical proxy bytecode. After deploy: token.setMinter(nft), then owner setMintOpen(true) only when ordered."
+}

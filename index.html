@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eye Agent — Every Eye Sees Differently | BNB Chain</title>
+<meta name="description" content="Eye Agent: 1,001 mystical eyes on BNB Chain. First mint FREE per wallet, then 0.0005 BNB. Every paid mint earns 120,000 $EYE.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👁</text></svg>">
+<style>
+:root{
+  --bg:#faf6ee; --card:#fffdf7; --ink:#2b2118; --muted:#7d6c55; --line:#e7dcc3;
+  --gold:#a97e12; --gold-deep:#8a6d1f; --gold-soft:#f3e8c8; --gold-pale:#fbf6e6;
+  --common:#5b7288; --rare:#3f7d5d; --epic:#7a4fa3; --legendary:#b3541e; --mythic:#a97e12;
+  --green:#2e7d4f; --red:#b3362b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:16px}
+img{max-width:100%;display:block}
+a{color:var(--gold-deep)}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;line-height:1.25}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+section{padding:44px 0 8px}
+h2{font-size:26px;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:20px;font-size:15px}
+.tier-common{color:var(--common)} .tier-rare{color:var(--rare)} .tier-epic{color:var(--epic)} .tier-legendary{color:var(--legendary)} .tier-mythic{color:var(--mythic)}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;color:#fff}
+.badge.common{background:var(--common)} .badge.rare{background:var(--rare)} .badge.epic{background:var(--epic)} .badge.legendary{background:var(--legendary)} .badge.mythic{background:var(--mythic)}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(250,246,238,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.hd{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:8px;font-family:Georgia,serif;font-size:19px;font-weight:700;color:var(--ink);text-decoration:none}
+.logo svg{width:26px;height:26px}
+.hd nav{margin-left:auto;display:flex;gap:2px;align-items:center}
+.hd nav a{font-size:13px;color:var(--muted);text-decoration:none;padding:6px 7px}
+.hd nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--gold);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center}
+.btn:hover{background:var(--gold-deep)}
+.btn.ghost{background:transparent;color:var(--gold-deep);border:1.5px solid var(--gold)}
+.btn.small{padding:7px 13px;font-size:13px;border-radius:8px}
+.btn:disabled{background:#c9bfa4;cursor:not-allowed}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+/* preview banner */
+.preview{background:#fff3cd;border-bottom:1px solid #e8d48a;color:#6b5510;font-size:13.5px;text-align:center;padding:9px 14px}
+.preview b{font-weight:800}
+/* hero */
+.hero{padding:34px 0 10px;text-align:center}
+.hero img{width:100%;max-width:560px;margin:0 auto;border-radius:18px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(90,70,20,.14)}
+.hero h1{font-size:34px;margin:20px 0 8px}
+.hero p.tag{font-family:Georgia,serif;font-style:italic;font-size:18px;color:var(--gold-deep)}
+.hero p.lede{color:var(--muted);max-width:520px;margin:10px auto 0;font-size:15.5px}
+.quickstats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.quickstats .qs{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 14px;min-width:104px}
+.quickstats .qs b{display:block;font-size:18px;font-family:Georgia,serif}
+.quickstats .qs span{font-size:12px;color:var(--muted)}
+/* live status */
+.status-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:6px}
+.status-top{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.ring{width:132px;height:132px;flex:0 0 auto;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .ring-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .ring-num b{font-size:24px;font-family:Georgia,serif}
+.ring .ring-num span{font-size:11.5px;color:var(--muted)}
+.status-nums{flex:1;min-width:200px}
+.status-nums .row{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:7px 0;font-size:15px}
+.status-nums .row:last-child{border-bottom:none}
+.status-nums .row span{color:var(--muted)}
+.status-nums .row b{font-variant-numeric:tabular-nums}
+.tierbar{margin-top:14px}
+.tierbar .tb-row{display:grid;grid-template-columns:86px 1fr 74px;gap:8px;align-items:center;font-size:13px;margin:7px 0}
+.tierbar .tb-track{height:9px;background:#efe6cd;border-radius:99px;overflow:hidden}
+.tierbar .tb-fill{height:100%;border-radius:99px}
+.tierbar .tb-num{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.live-note{font-size:12.5px;color:var(--muted);margin-top:12px}
+.live-note .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c9a227;margin-right:5px;vertical-align:1px}
+/* how */
+.steps{display:grid;gap:10px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;gap:14px}
+.step .n{flex:0 0 34px;height:34px;border-radius:50%;background:var(--gold-soft);color:var(--gold-deep);font-family:Georgia,serif;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:17px}
+.step h3{font-size:17px;margin-bottom:3px}
+.step p{font-size:14.5px;color:var(--muted)}
+/* gallery */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:6px 13px;font-size:13.5px;cursor:pointer;color:var(--ink)}
+.filters button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.card .cb{padding:11px 12px 13px}
+.card .cb h3{font-size:16px}
+.card .cb p{font-size:12.5px;color:var(--muted);margin-top:2px}
+.card .cb .ids{font-size:12px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums}
+/* rarity */
+.tiergrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.tiercard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tiercard.wide{grid-column:1/-1}
+.tiercard b{font-size:20px;font-family:Georgia,serif}
+.tiercard .tn{font-weight:700}
+.tiercard p{font-size:13px;color:var(--muted);margin-top:2px}
+table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--gold-pale);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{font-variant-numeric:tabular-nums}
+/* special */
+.special{background:linear-gradient(160deg,#fdf6dd,#f7ead0);border:1px solid #e3cd8f;border-radius:18px;padding:22px;text-align:center}
+.special img{width:100%;max-width:420px;margin:0 auto 16px;border-radius:14px;border:1px solid #e3cd8f}
+.special h3{font-size:22px}
+.special p{color:#6b5510;font-size:14.5px;max-width:480px;margin:8px auto 0}
+/* mint panel */
+.mint-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 18px}
+.mint-state{font-size:14px;padding:9px 12px;border-radius:10px;margin-bottom:16px;background:#fff3cd;border:1px solid #e8d48a;color:#6b5510}
+.mint-state.open{background:#e6f4ea;border-color:#b7dfc2;color:#205c36}
+.walletline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.walletline code{background:var(--gold-pale);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:13px;word-break:break-all}
+.youstats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 16px}
+.youstats .ys{background:var(--gold-pale);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.youstats .ys span{font-size:12px;color:var(--muted);display:block}
+.youstats .ys b{font-size:16px;font-variant-numeric:tabular-nums}
+.qtyrow{display:flex;align-items:center;gap:12px;margin:6px 0 4px}
+.qtyrow .qbtn{width:42px;height:42px;border-radius:10px;border:1.5px solid var(--gold);background:#fff;font-size:20px;font-weight:700;color:var(--gold-deep);cursor:pointer}
+.qtyrow .qval{font-size:22px;font-weight:700;min-width:34px;text-align:center;font-variant-numeric:tabular-nums}
+.priceline{font-size:15px;margin:8px 0 14px}
+.priceline b{font-variant-numeric:tabular-nums}
+.mint-msg{font-size:13.5px;margin-top:10px;min-height:20px;color:var(--muted)}
+.mint-msg.err{color:var(--red)}
+.mint-msg.ok{color:var(--green)}
+.gatebox{background:var(--gold-pale);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:18px;font-size:14px}
+.gatebox h3{font-size:16px;margin-bottom:5px}
+.gatebox p{color:var(--muted);font-size:13.5px}
+.promptbox{margin-top:18px}
+.promptbox h3{font-size:16px;margin-bottom:6px}
+.promptbox pre{background:#241c10;color:#f5eeda;border-radius:12px;padding:14px;font-size:13px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace;line-height:1.55}
+/* token */
+.tokengrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tokencard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.tokencard b{font-size:19px;font-family:Georgia,serif;display:block;font-variant-numeric:tabular-nums}
+.tokencard span{font-size:12.5px;color:var(--muted)}
+/* market */
+.market-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.market-card ul{margin:8px 0 0 20px;font-size:14.5px;color:var(--muted)}
+.market-card li{margin:4px 0}
+/* faq */
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:9px}
+.faq summary{cursor:pointer;font-weight:700;font-size:15px}
+.faq p{font-size:14.5px;color:var(--muted);margin-top:7px}
+/* details */
+.addr{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;word-break:break-all}
+/* footer */
+footer{padding:40px 0 90px;text-align:center;color:var(--muted);font-size:13.5px}
+footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.fab{position:fixed;right:16px;bottom:16px;z-index:60;box-shadow:0 8px 22px rgba(90,70,20,.35)}
+@media (max-width:480px){
+  .hero h1{font-size:28px}
+  h2{font-size:22px}
+  .gallery{grid-template-columns:1fr 1fr;gap:9px}
+  .hd nav a{display:none}
+  .hd nav a.keep{display:inline-block}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><circle cx="32" cy="32" r="26" stroke="#a97e12" stroke-width="3"/><circle cx="32" cy="32" r="12" fill="#a97e12"/><circle cx="32" cy="32" r="5" fill="#2b2118"/><circle cx="37" cy="27" r="3" fill="#fff"/></svg>
+      Eye Agent
+    </a>
+    <nav>
+      <a href="#gallery">Gallery</a>
+      <a href="#rarity">Rarity</a>
+      <a href="#token">Token</a>
+      <a href="#market">Market</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn small keep" href="#mint">Mint</a>
+    </nav>
+  </div>
+</header>
+
+<div class="preview" id="top"><b>PREVIEW</b> — Contracts are not deployed yet. Mint opens after deploy. Every number below is the planned specification, not a live count.</div>
+
+<main class="wrap">
+
+<!-- HERO -->
+<section class="hero">
+  <img src="assets/golden.jpg" alt="The Golden Gaze — Eye Agent hero eye">
+  <h1>Every Eye Sees Differently.</h1>
+  <p class="tag">1,001 mystical eyes. Eight gazes. One chain.</p>
+  <p class="lede">Eye Agent is a collection of 1,001 hand-drawn eyes on BNB Chain. Minted in order, one by one — your first eye is free, and every paid mint earns $EYE.</p>
+  <div class="btnrow" style="justify-content:center">
+    <a class="btn" href="#mint">Mint Your Eye</a>
+    <a class="btn ghost" href="#gallery">View the Gallery</a>
+  </div>
+  <div class="quickstats">
+    <div class="qs"><b>1,001</b><span>total supply</span></div>
+    <div class="qs"><b>8</b><span>eye designs</span></div>
+    <div class="qs"><b>5</b><span>rarity tiers</span></div>
+    <div class="qs"><b>0.0005</b><span>BNB per paid mint</span></div>
+  </div>
+</section>
+
+<!-- LIVE STATUS -->
+<section id="status">
+  <h2>Live Status</h2>
+  <p class="sub">Minted count is read straight from the contract — no wallet needed to see it.</p>
+  <div class="status-card">
+    <div class="status-top">
+      <div class="ring">
+        <svg width="132" height="132" viewBox="0 0 132 132">
+          <circle cx="66" cy="66" r="54" fill="none" stroke="#efe6cd" stroke-width="11"/>
+          <circle id="ringFill" cx="66" cy="66" r="54" fill="none" stroke="#a97e12" stroke-width="11" stroke-linecap="round" stroke-dasharray="339.29" stroke-dashoffset="339.29"/>
+        </svg>
+        <div class="ring-num"><b id="ringPct">—</b><span>minted</span></div>
+      </div>
+      <div class="status-nums">
+        <div class="row"><span>Minted</span><b id="statMinted">— / 1,001</b></div>
+        <div class="row"><span>Free claims</span><b id="statFree">—</b></div>
+        <div class="row"><span>Paid mints</span><b id="statPaid">—</b></div>
+        <div class="row"><span>Mint state</span><b id="statState">Preview</b></div>
+      </div>
+    </div>
+    <div class="tierbar" id="tierBars"></div>
+    <p class="live-note"><span class="dot"></span><span id="liveNote">Preview mode — live counts appear here once the contract is deployed.</span></p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <h2>How It Works</h2>
+  <p class="sub">Three steps. No allowlist, no registration, no waiting list.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div><h3>Connect your wallet</h3><p>Any wallet that signs directly — Binance Agentic Wallet or any agent wallet. Smart contracts cannot mint, so your mint is always yours.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h3>Mint your eye</h3><p>Your first mint per wallet is FREE (gas only). Mints 2–10 cost a flat 0.0005 BNB each. Eyes are minted in order — #1, then #2, all the way to #1,001.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h3>Claim your $EYE</h3><p>Every paid mint accrues 120,000 $EYE to your wallet. Claim it any time from this page — free mints accrue 0 $EYE.</p></div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <h2>The Gallery</h2>
+  <p class="sub">Eight gazes, painted in one style — gold orbital rings, starlight, and a soft white sky. Filter by tier.</p>
+  <div class="filters" id="filters">
+    <button data-f="all" class="on">All 8</button>
+    <button data-f="Common">Common</button>
+    <button data-f="Rare">Rare</button>
+    <button data-f="Epic">Epic</button>
+    <button data-f="Legendary">Legendary</button>
+    <button data-f="Mythic">Mythic</button>
+  </div>
+  <div class="gallery" id="galleryGrid"></div>
+</section>
+
+<!-- RARITY -->
+<section id="rarity">
+  <h2>Rarity</h2>
+  <p class="sub">Minting is sequential — eye #1 is the first minted, eye #1,001 the last. Your eye is decided by when you mint, not by luck of a draw.</p>
+  <div class="tiergrid">
+    <div class="tiercard"><span class="badge common">Common</span><br><b>500</b><p>Azure Gaze 250 · Emerald Gaze 250 — IDs 1–500 (49.95%)</p></div>
+    <div class="tiercard"><span class="badge rare">Rare</span><br><b>250</b><p>Violet Gaze 125 · Rose Gaze 125 — IDs 501–750 (24.98%)</p></div>
+    <div class="tiercard"><span class="badge epic">Epic</span><br><b>150</b><p>Crimson Gaze 75 · Lunar Gaze 75 — IDs 751–900 (14.99%)</p></div>
+    <div class="tiercard"><span class="badge legendary">Legendary</span><br><b>75</b><p>Onyx Gaze — IDs 901–975 (7.49%)</p></div>
+    <div class="tiercard wide"><span class="badge mythic">Mythic</span><br><b>26</b><p>The Golden Gaze — IDs 976–1,001 (2.60%). The final 26 eyes of the collection.</p></div>
+  </div>
+  <table>
+    <thead><tr><th>Eye</th><th>Tier</th><th>IDs</th><th>Count</th></tr></thead>
+    <tbody>
+      <tr><td>Azure Gaze</td><td class="tier-common">Common</td><td class="num">1 – 250</td><td class="num">250</td></tr>
+      <tr><td>Emerald Gaze</td><td class="tier-common">Common</td><td class="num">251 – 500</td><td class="num">250</td></tr>
+      <tr><td>Violet Gaze</td><td class="tier-rare">Rare</td><td class="num">501 – 625</td><td class="num">125</td></tr>
+      <tr><td>Rose Gaze</td><td class="tier-rare">Rare</td><td class="num">626 – 750</td><td class="num">125</td></tr>
+      <tr><td>Crimson Gaze</td><td class="tier-epic">Epic</td><td class="num">751 – 825</td><td class="num">75</td></tr>
+      <tr><td>Lunar Gaze</td><td class="tier-epic">Epic</td><td class="num">826 – 900</td><td class="num">75</td></tr>
+      <tr><td>Onyx Gaze</td><td class="tier-legendary">Legendary</td><td class="num">901 – 975</td><td class="num">75</td></tr>
+      <tr><td>The Golden Gaze</td><td class="tier-mythic">Mythic</td><td class="num">976 – 1,001</td><td class="num">26</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SPECIAL / MYSTERY -->
+<section id="special">
+  <div class="special">
+    <span class="badge mythic">Mythic · 26 only</span>
+    <h3 style="margin-top:10px">The Golden Gaze</h3>
+    <img src="assets/golden.jpg" alt="The Golden Gaze — Mythic eye, IDs 976 to 1001">
+    <p>The last 26 eyes of the collection. Because minting is sequential, The Golden Gaze can only appear once 975 eyes are already minted — the final stretch of the collection belongs to it.</p>
+    <p style="margin-top:10px"><b>IDs 976 – 1,001 · 26 of 1,001 (2.60%)</b></p>
+  </div>
+</section>
+
+<!-- MINT PANEL -->
+<section id="mint">
+  <h2>Mint</h2>
+  <p class="sub">First mint per wallet is free. Mints 2–10 cost 0.0005 BNB each. Max 10 per wallet — max spend 0.0045 BNB.</p>
+  <div class="mint-card">
+    <div class="mint-state" id="mintState">Preview — the mint contract is not deployed yet. The panel below shows how minting will work; the Mint button activates at deploy.</div>
+
+    <div class="walletline">
+      <button class="btn small" id="connectBtn">Connect Wallet</button>
+      <code id="walletAddr">Not connected</code>
+      <button class="btn small ghost" id="claimBtn" disabled>Claim $EYE</button>
+    </div>
+
+    <div class="youstats">
+      <div class="ys"><span>Your mints</span><b id="youMinted">— / 10</b></div>
+      <div class="ys"><span>Your free claim</span><b id="youFree">—</b></div>
+      <div class="ys"><span>Your $EYE claimable</span><b id="youEye">—</b></div>
+      <div class="ys"><span>Next mint price</span><b id="youPrice">—</b></div>
+    </div>
+
+    <div class="qtyrow">
+      <button class="qbtn" id="qtyMinus" aria-label="Fewer">−</button>
+      <span class="qval" id="qtyVal">1</span>
+      <button class="qbtn" id="qtyPlus" aria-label="More">+</button>
+      <span style="color:var(--muted);font-size:14px">eye(s) &nbsp;·&nbsp; max 10 per wallet</span>
+    </div>
+    <p class="priceline">Total: <b id="totalPrice">FREE</b> <span style="color:var(--muted)" id="priceNote">(planned — first mint free)</span></p>
+    <button class="btn" id="mintBtn" style="width:100%" disabled>Mint — Preview</button>
+    <p class="mint-msg" id="mintMsg"></p>
+
+    <div class="gatebox">
+      <h3>Who can mint?</h3>
+      <p><b>Any wallet that signs a transaction directly</b> — Binance Agentic Wallet, or any other agent wallet. The contract only checks that the caller is a real wallet (<code>msg.sender == tx.origin</code>), so smart contracts cannot mint.</p>
+      <p style="margin-top:6px">There is <b>no Agent ID registry check and no allowlist</b> — nothing to register for. If you can sign a BNB Chain transaction, you can mint.</p>
+    </div>
+
+    <div class="promptbox">
+      <h3>Agent prompt — copy &amp; paste to your agent wallet</h3>
+      <pre id="agentPrompt">Mint Eye Agent on BNB Chain. Open https://eye-agent.vercel.app/, connect this wallet, and mint 1 Eye Agent. The first mint per wallet is FREE (gas only); further mints cost 0.0005 BNB each, max 10 per wallet. Confirm the transaction on BNB Chain (chain ID 56). After minting, claim the EYE bonus — 120,000 EYE per paid mint — from the same page.</pre>
+      <div class="btnrow"><button class="btn small ghost" id="copyPromptBtn">Copy prompt</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKEN -->
+<section id="token">
+  <h2>$EYE Token</h2>
+  <p class="sub">The bonus token of the collection. Earned only by paid mints — never sold in a presale, never minted beyond the fixed supply.</p>
+  <div class="tokengrid">
+    <div class="tokencard"><b>1,000,000,000</b><span>total supply $EYE (fixed at deploy)</span></div>
+    <div class="tokencard"><b>540,000,000</b><span>bonus pool — held by the token contract for claims</span></div>
+    <div class="tokencard"><b>460,000,000</b><span>treasury — to the owner at deploy</span></div>
+    <div class="tokencard"><b>120,000</b><span>$EYE per paid mint (free mints earn 0)</span></div>
+    <div class="tokencard"><b>1,080,000</b><span>max $EYE per wallet (9 paid mints × 120,000)</span></div>
+    <div class="tokencard"><b>120,120,000</b><span>max the whole collection can ever pay out — inside the 540M pool</span></div>
+  </div>
+  <p style="font-size:14px;color:var(--muted);margin-top:14px">Claiming is retroactive: mint first, claim whenever you like. Your claimable balance is shown in the mint panel above once you connect — no deadline, no staking, no tax.</p>
+</section>
+
+<!-- MARKETPLACE -->
+<section id="market">
+  <h2>Marketplace</h2>
+  <p class="sub">Trade eyes peer-to-peer in our own escrow market — no platform fee, ever.</p>
+  <div class="market-card">
+    <p><b>0% platform fee.</b> When an eye sells, 95% goes to the seller and 5% goes to the creator wallet as royalty. Listings are held in escrow by the marketplace contract, so a sold eye is transferred the moment payment lands.</p>
+    <ul>
+      <li>List any eye you own — set your own price.</li>
+      <li>Buyers pay the exact listing price; overpaying reverts.</li>
+      <li>Cancel any time before a sale and your eye returns to you.</li>
+      <li>Royalty is 5% to the creator wallet on every secondary sale.</li>
+    </ul>
+    <div class="btnrow"><a class="btn" href="market.html">Open the Marketplace</a></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <h2>FAQ</h2>
+  <p class="sub">Straight answers, no hype.</p>
+  <details><summary>What is Eye Agent?</summary><p>A collection of 1,001 eye artworks on BNB Chain (BEP-721). Eight gaze designs across five rarity tiers, minted in order from #1 to #1,001.</p></details>
+  <details><summary>How much does it cost to mint?</summary><p>Your first mint per wallet is free — you only pay gas. Mints 2–10 cost a flat 0.0005 BNB each. The most any wallet can spend is 0.0045 BNB (9 paid mints).</p></details>
+  <details><summary>Who can mint? Do I need an Agent ID?</summary><p>Anyone whose wallet signs the transaction directly — Binance Agentic Wallet or any agent wallet. The contract checks only that the caller is a real wallet, not a smart contract. There is no Agent ID registry check and no allowlist.</p></details>
+  <details><summary>How is rarity decided?</summary><p>Minting is sequential. Eye #1 is the first minted, #1,001 the last. Azure Gaze is IDs 1–250, Emerald 251–500, Violet 501–625, Rose 626–750, Crimson 751–825, Lunar 826–900, Onyx 901–975, and The Golden Gaze 976–1,001. There is no random draw.</p></details>
+  <details><summary>What is $EYE?</summary><p>The collection's bonus token: 1,000,000,000 fixed supply. Every paid mint accrues 120,000 $EYE to the minter's wallet, claimable any time. Free mints accrue 0. Max 1,080,000 $EYE per wallet.</p></details>
+  <details><summary>When does mint open?</summary><p>Mint opens after the contracts are deployed and the page is verified. The opening time will be shown here in UTC.</p></details>
+  <details><summary>Where does the mint revenue go?</summary><p>Straight to the owner wallet in the mint transaction — the contract holds no revenue. The owner can withdraw any balance, and royalty on secondary sales is 5% to the same wallet.</p></details>
+  <details><summary>Can I sell my eye?</summary><p>Yes — on the collection's own marketplace (0% fee, 5% royalty) or any marketplace that supports BEP-721.</p></details>
+</section>
+
+<!-- DETAILS / CONTRACTS -->
+<section id="details">
+  <h2>Details &amp; Contracts</h2>
+  <p class="sub">Everything verifiable, nothing hidden. Addresses appear here the moment the contracts deploy.</p>
+  <table>
+    <tbody>
+      <tr><td>Chain</td><td>BNB Chain (chain ID 56)</td></tr>
+      <tr><td>Standard</td><td>BEP-721 (ERC-721) + ERC-2981 royalty 5%</td></tr>
+      <tr><td>Supply</td><td class="num">1,001 — sequential IDs 1–1,001</td></tr>
+      <tr><td>Price</td><td>#1 FREE per wallet · #2–10 @ 0.0005 BNB flat · max 10/wallet</td></tr>
+      <tr><td>NFT contract</td><td class="addr" id="addrNft">TBD — not yet deployed</td></tr>
+      <tr><td>$EYE token</td><td class="addr" id="addrToken">TBD — not yet deployed</td></tr>
+      <tr><td>Marketplace</td><td class="addr" id="addrMarket">TBD — not yet deployed</td></tr>
+      <tr><td>Owner / royalty receiver</td><td class="addr">0x36F3D56eAD5D1D6C2434F94DeFcEF732C5C3CbD2</td></tr>
+      <tr><td>Metadata (baseURI)</td><td class="addr">https://eye-agent.vercel.app/metadata/</td></tr>
+      <tr><td>Official X</td><td>To be announced</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b style="font-family:Georgia,serif;font-size:17px;color:var(--ink)">Eye Agent</b><br>Every Eye Sees Differently.</p>
+    <div class="share">
+      <a class="btn small ghost" id="shareX" href="#" target="_blank" rel="noopener">Share on X</a>
+      <button class="btn small ghost" id="copyLinkBtn">Copy page link</button>
+    </div>
+    <p>Official X: to be announced.<br>© 2026 Eye Agent. Artwork is original. Nothing here is financial advice, and no return is promised.</p>
+  </div>
+</footer>
+
+<a class="btn fab" href="#mint">Mint 👁</a>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+<script>
+"use strict";
+/* Eye Agent — mint page.
+   Preview state: NFT_ADDR / TOKEN_ADDR / MARKET_ADDR are the zero address
+   until the contracts deploy. In preview mode the page shows the planned
+   specification and the Mint button stays disabled. Once the addresses are
+   filled in, live counts, prices and wallet data are read from the chain. */
+const CFG = {
+  NFT: "0x0000000000000000000000000000000000000000",   // TBD — fill at deploy
+  TOKEN: "0x0000000000000000000000000000000000000000", // TBD — fill at deploy
+  MARKET: "0x0000000000000000000000000000000000000000",// TBD — fill at deploy
+  OWNER: "0x36F3D56eAD5D1D6C2434F94DeFcEF732C5C3CbD2",
+  BASE_URI: "https://eye-agent.vercel.app/metadata/",
+  SITE_URL: "https://eye-agent.vercel.app/",
+  MAX_SUPPLY: 1001,
+  MAX_PER_WALLET: 10,
+  PRICE_WEI: 500000000000000n, // 0.0005 BNB
+  BONUS_WEI: 120000n * 10n ** 18n
+};
+const DEPLOYED = CFG.NFT !== "0x0000000000000000000000000000000000000000";
+const RPCS = [
+  "https://bsc-dataseed1.defibit.io",
+  "https://bsc-rpc.publicnode.com",
+  "https://bsc-dataseed3.bnbchain.org",
+  "https://1rpc.io/bnb"
+];
+// Function selectors (computed from the contract ABI)
+const SEL = {
+  totalMinted: "0xa2309ff8", freeMinted: "0xd10a1a2b", paidMinted: "0x2806b8fb",
+  mintOpen: "0x24bbd049", priceFor: "0xd527979a", mintedOf: "0x617692dd",
+  nextPrice: "0xe27da0fa", freeClaimed: "0x61c0b6a0",
+  claimable: "0x402914f5", accrued: "0xb148440f"
+};
+const EYES = [
+  { name: "Azure Gaze", slug: "azure", tier: "Common", ids: "1 – 250", count: 250, start: 1 },
+  { name: "Emerald Gaze", slug: "emerald", tier: "Common", ids: "251 – 500", count: 250, start: 251 },
+  { name: "Violet Gaze", slug: "violet", tier: "Rare", ids: "501 – 625", count: 125, start: 501 },
+  { name: "Rose Gaze", slug: "rose", tier: "Rare", ids: "626 – 750", count: 125, start: 626 },
+  { name: "Crimson Gaze", slug: "crimson", tier: "Epic", ids: "751 – 825", count: 75, start: 751 },
+  { name: "Lunar Gaze", slug: "silver", tier: "Epic", ids: "826 – 900", count: 75, start: 826 },
+  { name: "Onyx Gaze", slug: "onyx", tier: "Legendary", ids: "901 – 975", count: 75, start: 901 },
+  { name: "The Golden Gaze", slug: "golden", tier: "Mythic", ids: "976 – 1,001", count: 26, start: 976 }
+];
+const TIERS = [
+  { name: "Common", cls: "common", color: "#5b7288", total: 500, start: 1 },
+  { name: "Rare", cls: "rare", color: "#3f7d5d", total: 250, start: 501 },
+  { name: "Epic", cls: "epic", color: "#7a4fa3", total: 150, start: 751 },
+  { name: "Legendary", cls: "legendary", color: "#b3541e", total: 75, start: 901 },
+  { name: "Mythic", cls: "mythic", color: "#a97e12", total: 26, start: 976 }
+];
+const $ = (id) => document.getElementById(id);
+const fmtBNB = (wei) => (Number(wei) / 1e18).toFixed(4).replace(/\.?0+$/, "") || "0";
+const fmtEye = (wei) => (Number(wei) / 1e18).toLocaleString("en-US");
+
+/* ---------- gallery ---------- */
+function renderGallery(filter) {
+  const grid = $("galleryGrid");
+  grid.innerHTML = "";
+  EYES.filter((e) => filter === "all" || e.tier === filter).forEach((e) => {
+    const d = document.createElement("div");
+    d.className = "card";
+    d.innerHTML =
+      '<img src="assets/' + e.slug + '.jpg" alt="' + e.name + '" loading="lazy">' +
+      '<div class="cb"><span class="badge ' + e.tier.toLowerCase() + '">' + e.tier + '</span>' +
+      '<h3>' + e.name + '</h3><p>' + e.count + ' eyes in the collection</p>' +
+      '<p class="ids">IDs ' + e.ids + '</p></div>';
+    grid.appendChild(d);
+  });
+}
+$("filters").addEventListener("click", (ev) => {
+  const b = ev.target.closest("button");
+  if (!b) return;
+  document.querySelectorAll("#filters button").forEach((x) => x.classList.remove("on"));
+  b.classList.add("on");
+  renderGallery(b.dataset.f);
+});
+renderGallery("all");
+
+/* ---------- tier bars (sequential mint: minted-in-tier is exact) ---------- */
+function renderTierBars(totalMinted) {
+  const box = $("tierBars");
+  box.innerHTML = "";
+  TIERS.forEach((t) => {
+    const minted = totalMinted == null ? 0
+      : Math.max(0, Math.min(t.total, totalMinted - t.start + 1));
+    const pct = totalMinted == null ? 0 : Math.round((minted / t.total) * 100);
+    const row = document.createElement("div");
+    row.className = "tb-row";
+    row.innerHTML =
+      '<span class="tier-' + t.cls + '"><b>' + t.name + '</b></span>' +
+      '<span class="tb-track"><span class="tb-fill" style="display:block;width:' + pct + '%;background:' + t.color + '"></span></span>' +
+      '<span class="tb-num">' + (totalMinted == null ? "—" : minted) + ' / ' + t.total + '</span>';
+    box.appendChild(row);
+  });
+}
+renderTierBars(null);
+
+/* ---------- public RPC reads (no wallet needed) ---------- */
+async function rpcCall(to, data) {
+  const body = JSON.stringify({ jsonrpc: "2.0", method: "eth_call", params: [{ to, data }, "latest"], id: 1 });
+  for (const url of RPCS) {
+    try {
+      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body });
+      const j = await r.json();
+      if (j && j.result) return j.result;
+    } catch (e) { /* try next endpoint */ }
+  }
+  throw new Error("all RPC endpoints failed");
+}
+const hexToInt = (h) => parseInt(h, 16);
+const padAddr = (a) => "0x000000000000000000000000" + a.slice(2).toLowerCase();
+const padUint = (n) => "0x" + BigInt(n).toString(16).padStart(64, "0");
+
+async function refreshLive() {
+  if (!DEPLOYED) return; // preview mode: keep the planned display
+  try {
+    const [tm, fm, pm, open] = await Promise.all([
+      rpcCall(CFG.NFT, SEL.totalMinted),
+      rpcCall(CFG.NFT, SEL.freeMinted),
+      rpcCall(CFG.NFT, SEL.paidMinted),
+      rpcCall(CFG.NFT, SEL.mintOpen)
+    ]);
+    const total = hexToInt(tm), free = hexToInt(fm), paid = hexToInt(pm);
+    const isOpen = hexToInt(open) === 1;
+    $("statMinted").textContent = total.toLocaleString("en-US") + " / 1,001";
+    $("statFree").textContent = free.toLocaleString("en-US");
+    $("statPaid").textContent = paid.toLocaleString("en-US");
+    $("statState").textContent = isOpen ? "Open" : "Closed";
+    $("ringPct").textContent = Math.floor((total / CFG.MAX_SUPPLY) * 100) + "%";
+    $("ringFill").style.strokeDashoffset = String(339.29 * (1 - total / CFG.MAX_SUPPLY));
+    renderTierBars(total);
+    $("liveNote").textContent = "Live from the contract · updated " + new Date().toUTCString().slice(17, 25) + " UTC";
+    const ms = $("mintState");
+    if (isOpen) {
+      ms.className = "mint-state open";
+      ms.textContent = "Mint is OPEN — first mint per wallet is free, then 0.0005 BNB each.";
+    } else {
+      ms.className = "mint-state";
+      ms.textContent = "Mint is currently closed. The owner opens it from the contract.";
+    }
+    if (wallet) await refreshWallet();
+  } catch (e) {
+    $("liveNote").textContent = "Live read failed — showing the last verified value. Will retry automatically.";
+  }
+}
+
+/* ---------- wallet ---------- */
+let wallet = null, provider = null, signer = null;
+let qty = 1;
+let walletFree = null, walletMinted = 0; // wallet state from the chain (null = unknown)
+
+async function refreshWallet() {
+  if (!wallet || !DEPLOYED) return;
+  try {
+    const [mo, fc, cl] = await Promise.all([
+      rpcCall(CFG.NFT, SEL.mintedOf + padAddr(wallet).slice(2)),
+      rpcCall(CFG.NFT, SEL.freeClaimed + padAddr(wallet).slice(2)),
+      rpcCall(CFG.TOKEN, SEL.claimable + padAddr(wallet).slice(2))
+    ]);
+    const minted = hexToInt(mo);
+    const hasFree = hexToInt(fc) === 1;
+    walletMinted = minted; walletFree = hasFree;
+    $("youMinted").textContent = minted + " / 10";
+    $("youFree").textContent = hasFree ? "Used" : "Available";
+    $("youEye").textContent = fmtEye(BigInt(cl)) + " $EYE";
+    $("claimBtn").disabled = BigInt(cl) === 0n;
+    updatePricePreview();
+  } catch (e) { /* keep previous values */ }
+}
+
+function updatePricePreview() {
+  if (!DEPLOYED) {
+    $("youPrice").textContent = "FREE (planned)";
+    $("totalPrice").textContent = qty === 1 ? "FREE" : fmtBNB(CFG.PRICE_WEI * BigInt(qty - 1)) + " BNB";
+    $("priceNote").textContent = "(planned — first mint free, then 0.0005 BNB each)";
+    return;
+  }
+  const hasFree = walletFree === true; // free claim already used?
+  const paid = hasFree ? qty : Math.max(0, qty - 1);
+  const total = CFG.PRICE_WEI * BigInt(paid);
+  $("youPrice").textContent = walletFree === null ? "—" : (hasFree ? "0.0005 BNB" : "FREE");
+  $("totalPrice").textContent = total === 0n ? "FREE" : fmtBNB(total) + " BNB";
+  $("priceNote").textContent = "(" + paid + " paid × 0.0005 BNB" + (hasFree ? "" : " · first in this batch free") + ")";
+  if (wallet) $("mintBtn").textContent = "Mint " + qty + " Eye" + (qty > 1 ? "s" : "");
+}
+
+$("qtyMinus").addEventListener("click", () => { if (qty > 1) { qty--; $("qtyVal").textContent = qty; updatePricePreview(); } });
+$("qtyPlus").addEventListener("click", () => { if (qty < 10) { qty++; $("qtyVal").textContent = qty; updatePricePreview(); } });
+
+$("connectBtn").addEventListener("click", async () => {
+  const msg = $("mintMsg");
+  if (!window.ethereum) { msg.className = "mint-msg err"; msg.textContent = "No wallet found. Open this page in a wallet browser (e.g. Binance Agentic Wallet)."; return; }
+  try {
+    provider = new ethers.BrowserProvider(window.ethereum);
+    const accounts = await provider.send("eth_requestAccounts", []);
+    wallet = accounts[0];
+    signer = await provider.getSigner();
+    const net = await provider.getNetwork();
+    if (Number(net.chainId) !== 56) {
+      try { await provider.send("wallet_switchEthereumChain", [{ chainId: "0x38" }]); }
+      catch (e) { msg.className = "mint-msg err"; msg.textContent = "Please switch your wallet to BNB Chain (chain ID 56)."; return; }
+    }
+    $("walletAddr").textContent = wallet.slice(0, 6) + "…" + wallet.slice(-4);
+    $("connectBtn").textContent = "Connected";
+    msg.className = "mint-msg ok"; msg.textContent = "Wallet connected.";
+    if (DEPLOYED) { $("mintBtn").disabled = false; $("mintBtn").textContent = "Mint " + qty + " Eye" + (qty > 1 ? "s" : ""); await refreshWallet(); }
+  } catch (e) {
+    msg.className = "mint-msg err"; msg.textContent = "Connection failed: " + (e && e.message ? e.message.slice(0, 120) : e);
+  }
+});
+
+$("mintBtn").addEventListener("click", async () => {
+  const msg = $("mintMsg");
+  if (!DEPLOYED) return;
+  if (!wallet || !signer) { msg.className = "mint-msg err"; msg.textContent = "Connect your wallet first."; return; }
+  if (typeof ethers === "undefined") { msg.className = "mint-msg err"; msg.textContent = "Wallet library failed to load — please refresh the page."; return; }
+  try {
+    msg.className = "mint-msg"; msg.textContent = "Quoting price from the contract…";
+    const nft = new ethers.Contract(CFG.NFT, ["function priceFor(address,uint256) view returns (uint256)", "function mint(uint256) payable"], signer);
+    const cost = await nft.priceFor(wallet, qty);
+    msg.textContent = "Sending mint transaction…";
+    const tx = await nft["mint(uint256)"](qty, { value: cost });
+    msg.textContent = "Waiting for confirmation… " + tx.hash.slice(0, 18) + "…";
+    await tx.wait();
+    msg.className = "mint-msg ok"; msg.textContent = "Minted! Your eye is on its way to your wallet.";
+    await refreshLive();
+  } catch (e) {
+    const m = (e && e.message) || String(e);
+    msg.className = "mint-msg err";
+    if (m.includes("NotAgent")) msg.textContent = "This mint must come from a wallet directly — smart contracts cannot mint.";
+    else if (m.includes("MintClosed")) msg.textContent = "Mint is closed right now.";
+    else if (m.includes("SoldOut")) msg.textContent = "Sold out — all 1,001 eyes are minted.";
+    else if (m.includes("OverLimit")) msg.textContent = "Over the limit: max 10 eyes per wallet.";
+    else if (m.includes("WrongValue")) msg.textContent = "Wrong payment amount — the price changed; refresh and try again.";
+    else if (m.includes("user rejected") || m.includes("User denied")) msg.textContent = "Transaction rejected in your wallet.";
+    else msg.textContent = "Mint failed: " + m.slice(0, 160);
+  }
+});
+
+$("claimBtn").addEventListener("click", async () => {
+  const msg = $("mintMsg");
+  if (!DEPLOYED || !wallet || !signer) return;
+  try {
+    const tok = new ethers.Contract(CFG.TOKEN, ["function claim()"], signer);
+    const tx = await tok.claim();
+    msg.className = "mint-msg"; msg.textContent = "Claiming $EYE… " + tx.hash.slice(0, 18) + "…";
+    await tx.wait();
+    msg.className = "mint-msg ok"; msg.textContent = "$EYE claimed to your wallet.";
+    await refreshWallet();
+  } catch (e) {
+    msg.className = "mint-msg err";
+    msg.textContent = "Claim failed: " + ((e && e.message) || e).slice(0, 140);
+  }
+});
+
+/* ---------- copy helpers + share ---------- */
+async function copyText(text, doneMsg) {
+  try { await navigator.clipboard.writeText(text); }
+  catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch (e2) {}
+    document.body.removeChild(ta);
+  }
+  const msg = $("mintMsg");
+  msg.className = "mint-msg ok"; msg.textContent = doneMsg;
+}
+$("copyPromptBtn").addEventListener("click", () => copyText($("agentPrompt").textContent, "Agent prompt copied."));
+$("copyLinkBtn").addEventListener("click", () => copyText(CFG.SITE_URL, "Page link copied."));
+(function () {
+  const text = "Eye Agent — 1,001 mystical eyes on BNB Chain. First mint FREE, then 0.0005 BNB. Every eye sees differently.";
+  $("shareX").href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(CFG.SITE_URL);
+})();
+
+/* ---------- boot ---------- */
+if (DEPLOYED) {
+  $("addrNft").textContent = CFG.NFT;
+  $("addrToken").textContent = CFG.TOKEN;
+  $("addrMarket").textContent = CFG.MARKET;
+  refreshLive();
+  setInterval(refreshLive, 30000);
+} else {
+  updatePricePreview();
+}
+</script>
+</body>
+</html>

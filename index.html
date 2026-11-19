@@ -178,7 +178,6 @@ footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
   </div>
 </header>
 
-<div class="preview" id="top"><b>PREVIEW</b> — Contracts are not deployed yet. Mint opens after deploy. Every number below is the planned specification, not a live count.</div>
 
 <main class="wrap">
 
@@ -221,7 +220,7 @@ footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
       </div>
     </div>
     <div class="tierbar" id="tierBars"></div>
-    <p class="live-note"><span class="dot"></span><span id="liveNote">Preview mode — live counts appear here once the contract is deployed.</span></p>
+    <p class="live-note"><span class="dot"></span><span id="liveNote">Connecting to the contract…</span></p>
   </div>
 </section>
 
@@ -315,7 +314,7 @@ footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
       <span style="color:var(--muted);font-size:14px">eye(s) &nbsp;·&nbsp; max 10 per wallet</span>
     </div>
     <p class="priceline">Total: <b id="totalPrice">FREE</b> <span style="color:var(--muted)" id="priceNote">(planned — first mint free)</span></p>
-    <button class="btn" id="mintBtn" style="width:100%" disabled>Mint — Preview</button>
+    <button class="btn" id="mintBtn" style="width:100%" disabled>Mint Eye</button>
     <p class="mint-msg" id="mintMsg"></p>
 
     <div class="gatebox">
@@ -372,7 +371,7 @@ footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
   <details><summary>Who can mint? Do I need an Agent ID?</summary><p>Anyone whose wallet signs the transaction directly — Binance Agentic Wallet or any agent wallet. The contract checks only that the caller is a real wallet, not a smart contract. There is no Agent ID registry check and no allowlist.</p></details>
   <details><summary>How is rarity decided?</summary><p>Minting is sequential. Eye #1 is the first minted, #1,001 the last. Azure Gaze is IDs 1–250, Emerald 251–500, Violet 501–625, Rose 626–750, Crimson 751–825, Lunar 826–900, Onyx 901–975, and The Golden Gaze 976–1,001. There is no random draw.</p></details>
   <details><summary>What is $EYE?</summary><p>The collection's bonus token: 1,000,000,000 fixed supply. Every paid mint accrues 120,000 $EYE to the minter's wallet, claimable any time. Free mints accrue 0. Max 1,080,000 $EYE per wallet.</p></details>
-  <details><summary>When does mint open?</summary><p>Mint opens after the contracts are deployed and the page is verified. The opening time will be shown here in UTC.</p></details>
+  <details><summary>When does mint open?</summary><p>Mint is open since 19 November 2026. First mint FREE, then 0.0005 BNB each, max 10 per wallet.</p></details>
   <details><summary>Where does the mint revenue go?</summary><p>Straight to the owner wallet in the mint transaction — the contract holds no revenue. The owner can withdraw any balance, and royalty on secondary sales is 5% to the same wallet.</p></details>
   <details><summary>Can I sell my eye?</summary><p>Yes — on the collection's own marketplace (0% fee, 5% royalty) or any marketplace that supports BEP-721.</p></details>
 </section>
@@ -387,9 +386,9 @@ footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
       <tr><td>Standard</td><td>BEP-721 (ERC-721) + ERC-2981 royalty 5%</td></tr>
       <tr><td>Supply</td><td class="num">1,001 — sequential IDs 1–1,001</td></tr>
       <tr><td>Price</td><td>#1 FREE per wallet · #2–10 @ 0.0005 BNB flat · max 10/wallet</td></tr>
-      <tr><td>NFT contract</td><td class="addr" id="addrNft">TBD — not yet deployed</td></tr>
-      <tr><td>$EYE token</td><td class="addr" id="addrToken">TBD — not yet deployed</td></tr>
-      <tr><td>Marketplace</td><td class="addr" id="addrMarket">TBD — not yet deployed</td></tr>
+      <tr><td>NFT contract</td><td class="addr" id="addrNft">0xE1a4eD8aFd57b387eF25154Ed378951897C74429</td></tr>
+      <tr><td>$EYE token</td><td class="addr" id="addrToken">0xF2F6eB4d9A0a16d541309EB5c87B411690b9eaF6</td></tr>
+      <tr><td>Marketplace</td><td class="addr" id="addrMarket">0x433D261d709aba0c587fb48c60aa32B194707E4A</td></tr>
       <tr><td>Owner / royalty receiver</td><td class="addr">0x36F3D56eAD5D1D6C2434F94DeFcEF732C5C3CbD2</td></tr>
       <tr><td>Metadata (baseURI)</td><td class="addr">https://eye-agent.vercel.app/metadata/</td></tr>
       <tr><td>Official X</td><td>To be announced</td></tr>
@@ -415,15 +414,12 @@ footer .share{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
 <script>
 "use strict";
-/* Eye Agent — mint page.
-   Preview state: NFT_ADDR / TOKEN_ADDR / MARKET_ADDR are the zero address
-   until the contracts deploy. In preview mode the page shows the planned
-   specification and the Mint button stays disabled. Once the addresses are
-   filled in, live counts, prices and wallet data are read from the chain. */
+/* Eye Agent — mint page. Live since 19 November 2026: contracts deployed,
+   mint open. Live counts, prices and wallet data are read from the chain. */
 const CFG = {
-  NFT: "0x0000000000000000000000000000000000000000",   // TBD — fill at deploy
-  TOKEN: "0x0000000000000000000000000000000000000000", // TBD — fill at deploy
-  MARKET: "0x0000000000000000000000000000000000000000",// TBD — fill at deploy
+  NFT: "0xE1a4eD8aFd57b387eF25154Ed378951897C74429",
+  TOKEN: "0xF2F6eB4d9A0a16d541309EB5c87B411690b9eaF6",
+  MARKET: "0x433D261d709aba0c587fb48c60aa32B194707E4A",
   OWNER: "0x36F3D56eAD5D1D6C2434F94DeFcEF732C5C3CbD2",
   BASE_URI: "https://eye-agent.vercel.app/metadata/",
   SITE_URL: "https://eye-agent.vercel.app/",

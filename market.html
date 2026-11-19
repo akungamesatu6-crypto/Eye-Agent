@@ -83,7 +83,6 @@ footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:13.5px
   </div>
 </header>
 
-<div class="preview"><b>PREVIEW</b> — The marketplace contract is not deployed yet. Listings appear here once it is live.</div>
 
 <main class="wrap">
 
@@ -130,7 +129,7 @@ footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:13.5px
       <li><b>Cancel / reprice:</b> only the seller can cancel a listing or change its price, any time before it sells.</li>
       <li><b>Fees:</b> 0% platform fee. The only costs are the BNB gas for your own transactions.</li>
     </ul>
-    <p style="margin-top:10px">Contract: <span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px" id="marketAddr">TBD — not yet deployed</span></p>
+    <p style="margin-top:10px">Contract: <span style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px" id="marketAddr">0x433D261d709aba0c587fb48c60aa32B194707E4A</span></p>
   </div>
 </section>
 
@@ -150,8 +149,8 @@ footer{padding:36px 0 60px;text-align:center;color:var(--muted);font-size:13.5px
    address until the contract deploys. Listings are read from the chain
    without a wallet; listing/buying/cancelling need a connected wallet. */
 const CFG = {
-  NFT: "0x0000000000000000000000000000000000000000",   // TBD — fill at deploy
-  MARKET: "0x0000000000000000000000000000000000000000",// TBD — fill at deploy
+  NFT: "0xE1a4eD8aFd57b387eF25154Ed378951897C74429",
+  MARKET: "0x433D261d709aba0c587fb48c60aa32B194707E4A",
   OWNER: "0x36F3D56eAD5D1D6C2434F94DeFcEF732C5C3CbD2"
 };
 const DEPLOYED = CFG.MARKET !== "0x0000000000000000000000000000000000000000";
